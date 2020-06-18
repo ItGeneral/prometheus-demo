@@ -1,0 +1,15 @@
+management:
+  security:
+    enabled: false
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  metrics:
+    tags:
+      application: /
+
+server:
+  servlet:
+    context-path: /@build.finalName@
+  port: 80
