@@ -29,7 +29,8 @@ pipeline {
         stage ('build & push') {
             steps {
                 container ('maven') {
-                    sh 'docker build --no-cache -f Dockerfile-online -t $REGISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:$TAG_NAME .'
+                    sh 'll'
+                    sh 'docker build --build-args MAVENREPO=maven:3.6.3-openjdk-8 -t $APP_NAME .'
                     withCredentials([usernamePassword(passwordVariable : 'DOCKER_PASSWORD' ,usernameVariable : 'DOCKER_USERNAME' ,credentialsId : "$DOCKER_CREDENTIAL_ID" ,)]) {
                         sh 'echo "$DOCKER_PASSWORD" | docker login $REGISTRY -u "$DOCKER_USERNAME" --password-stdin'
                         sh 'docker push  $REGISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:$TAG_NAME'
