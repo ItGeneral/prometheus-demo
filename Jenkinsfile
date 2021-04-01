@@ -44,15 +44,15 @@ pipeline {
            }
            steps{
                 container ('maven') {
-                  sh 'docker tag  $REGISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:$TAG_NAME $REGISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:latest '
-                  sh 'docker push  $REGISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:latest '
+                  sh 'docker tag $APP_NAME:latest $REGISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:$TAG_NAME '
+                  sh 'docker push  $REGISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:$TAG_NAME '
                 }
            }
         }
 
         stage('deploy to dev') {
           when{
-            branch 'sonarqube'
+            branch 'master'
           }
           steps {
             input(id: 'deploy-to-dev', message: 'deploy to dev?')
